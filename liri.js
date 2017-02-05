@@ -1,4 +1,6 @@
 var keysReqd = require('./keys.js');
+var fs = require('fs')
+
 var commandsObj = {
     one: 'my-tweets'        
     two: 'spotify-this-song'
@@ -6,10 +8,10 @@ var commandsObj = {
     four: 'do-what-it-says'
 };
 var commandArg = keysReqd(process.argv[2]);
-var tweet = 'commandArg === my-tweets';
-var spotify = 'commandArg === spotify-this-song';
-var movie = 'commandArg === movie-this';
-var justDoIt = 'commandArg === do-what-it-says';
+var tweet = 'commandArg === ' + commandsObj.one;
+var spotify = 'commandArg === ' + commandsObj.two;
+var movie = 'commandArg === ' + commandsObj.three;
+var justDoIt = 'commandArg === ' + commandsObj.four;
 
 // ### What Each Command Should Do
 switch(e){
@@ -19,13 +21,24 @@ switch(e){
         var date;
         var tweet;
         //* This will show your last 20 tweets and when they were created at in your terminal/bash window.
-
-        console.log('Tweeted on' + date + '---' + tweet);        
+        var input = 'Tweeted on' + date + '---' + tweet
+        console.log(input);
+        // write/append the log.txt file for all console.log
+        function logAppend(input){
+            fs.appendFile('log.txt', input, function(err){
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log('Content Added!')
+                }
+            });
+        };        
         break;
 // 2. `node liri.js spotify-this-song '<song name here>'`
     case spotify:
         //code
         var songArg = keysReqd(process.argv[3]);
+    
         // * This will show the following information about the song in your terminal/bash window
         // * Artist(s)
         console.log('Artist : ' + artistName);
