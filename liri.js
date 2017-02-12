@@ -79,7 +79,7 @@ switch (commandArg) {
             //This will show your last 20 tweets and when they were created at in your terminal/bash window.
             for (var i = 0; i < 20; i++){
                 console.log('-------------------------')
-                console.log('Date Submitted: ' + tweets[i].date);
+                console.log('Date Submitted: ' + tweets[i].created_at);
                 console.log('Tweet ' + i + ' : ' + tweets[i].text);
                 console.log('-------------------------')
                 tweetContent = '\nTweet ' + i + ' : ' + tweets[i].text + '\n-------------------------'
