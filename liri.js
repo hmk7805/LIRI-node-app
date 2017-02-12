@@ -93,7 +93,7 @@ switch (commandArg) {
             } 
         });
         break;       
-    3. `node liri.js movie-this '<movie name here>'`
+    //3. `node liri.js movie-this '<movie name here>'`
     case movie:
         //code
         //* If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
