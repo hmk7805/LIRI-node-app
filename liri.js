@@ -112,7 +112,7 @@ switch (commandArg) {
                 // var unhandledRej = require('unhandled-rejection');np
 
                 if (err) {
-                    console.log('this error is: ' + err);
+                    console.log(err);
                 } 
                 if (movie) {
                     // Then we print out the imdbRating
