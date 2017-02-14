@@ -55,7 +55,7 @@ switch (commandArg) {
             console.log('Preview Link: ' + linkUrl );
             console.log('Album : ' + albumName);
             console.log('---------------------------------------');
-            var content = '\n---------------------------------------\n \nArtist :  ' + artistName + '\nSong : ' + songName + '\nPreview Link: ' + linkUrl + '\nAlbum : ' + albumName + '\n---------------------------------------\n';
+            var content = '\n---------------------------------------' + '\nArtist :  ' + artistName + '\nSong : ' + songName + '\nPreview Link: ' + linkUrl + '\nAlbum : ' + albumName + '\n---------------------------------------\n';
             fs.appendFile('log.txt', content, function(err){
                 if(err){
                     console.log(err);
@@ -107,24 +107,26 @@ switch (commandArg) {
             console.log('-------------------------')
             //* It's on Netflix!
         } else{
-            imdb.get(movieArg).then(function(err, movie){
+            imdb.get(movieArg).then(function(movie, err){
             // If there were no errors and the response code was 200 (i.e. the request was successful)...
                 // var unhandledRej = require('unhandled-rejection');np
-
                 if (err) {
-                    console.log(err);
+                    console.log('The error is: ' + err);
                 } 
-                if (movie) {
+                // console.log(movie);
                     // Then we print out the imdbRating
                     // 	* This will output the following information to your terminal/bash window:
-                    var movieTitle = movie.title
-                    var movieRating = movie.rated
-                    var movieYear = movie._year_data
-                    var movieCountry = movie.country
-                    var moviePlot = movie.plot
-                    var movieActors = movie.actors
-                    var movieRTR = movie.rating
-                    var movieURL = movie.imdburl
+                    var movieTitle = movie.title;
+                    var movieRating = movie.rated;
+                    var movieYear = movie._year_data;
+                    var movieCountry = movie.country;
+                    var movieLanguage = movie.languages;
+                    var moviePlot = movie.plot;
+                    var movieActors = movie.actors;
+                    var movieRTR = movie.rating;
+                    var movieURL = movie.imdburl;
+                    
+                    console.log('--------------------------------------------------------');                    
                     // * Title of the movie
                     console.log('Movie: ' + movieTitle);
                     // * Year the movie came out.
@@ -143,7 +145,14 @@ switch (commandArg) {
                     console.log('Rating: ' + movieRTR)
                     // * IMDB URL.
                     console.log('IMDB URL: ' + movieURL);
-                };
+                    console.log('--------------------------------------------------------');                    
+                    var movieContent = '\n--------------------------------------------------------' + '\nMovie: ' + movieTitle + '\nYear: ' + movieYear + '\nRating: ' + movieRating + '\nCountry: ' + movieCountry + '\nLanguage: ' + movieLanguage + '\nPlot: ' + moviePlot + '\nActors: ' + movieActors + '\nRating: ' + movieRTR + '\nIMDB URL: ' + movieURL + '\n--------------------------------------------------------';                    
+                    fs.appendFile('log.txt', movieContent, function(err){
+                    if(err){
+                        console.log(err);
+                    };
+                    console.log('log.txt is appended');
+            });
             });
         };
         break;
