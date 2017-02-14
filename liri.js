@@ -1,6 +1,6 @@
 var keysReqd = require('./keys.js');
 var fs = require('fs');
-var request = require('request');
+var imdb = require('imdb-api');
 var Twitter = require('twitter');
 var spotify = require('spotify');
 
@@ -97,6 +97,7 @@ switch (commandArg) {
     case movie:
         //code
         //* If the user doesn't type a movie in, the program will output data for the movie 'Mr. Nobody.'
+        var movieArg = process.argv[3];    
         if (movieArg === undefined){
             //code
             //* If you haven't watched "Mr. Nobody," then you should: http://www.imdb.com/title/tt0485947/
@@ -105,43 +106,47 @@ switch (commandArg) {
             console.log("It's on Netflix!" )
             console.log('-------------------------')
             //* It's on Netflix!
-        }
-        var movieArg = process.argv[3];    
-        request("'http://www.omdbapi.com/?t=' + movieArg + '&y=&plot=short&r=json'", function(error, response, body) {
-        // If there were no errors and the response code was 200 (i.e. the request was successful)...
-            if (!error && response.statusCode === 200) {
-                // Then we print out the imdbRating
-                // 	* This will output the following information to your terminal/bash window:
-                // * Title of the movie
-                // var movieTitle = JSON.parse(body).__________;
-                // var movieRating = JSON.parse(body).__________;
-                // var movieCountry = JSON.parse(body).__________;
-                // var moviePlot = JSON.parse(body).__________;
-                // var movieActors = JSON.parse(body).__________;
-                // var movieRTR = JSON.parse(body).__________;
-                // var movieURL = JSON.parse(body).__________;
-                //Test
-                console.log(JSON.stringify(body, 2, null));
-                // console.log('Movie: ' + movieTitle);
-                // // * Year the movie came out.
-                // console.log('Year: ' + movieYear);
-                // // * IMDB Rating of the movie.
-                // console.log('Rating: ' + movieRating);
-                // // * Country where the movie was produced.
-                // console.log('Country: ' + movieCountry);
-                // // * Language of the movie.
-                // console.log('Language: ' + movieLanguage);
-                // // * Plot of the movie.
-                // console.log('Plot: ' + moviePlot);
-                // // * Actors in the movie.
-                // console.log('Actors: ' + movieActors);
-                // // * Rotten Tomatoes Rating.
-                // console.log('Rotten Tomatoes Rating: ' + movieRTR);
-                // // * Rotten Tomatoes URL.
-                // console.log('Rotten Tomatoes URL: ' + movieURL);
-            };
-        });
-        break
+        } else{
+            imdb.get(movieArg).then(function(err, movie){
+            // If there were no errors and the response code was 200 (i.e. the request was successful)...
+                // var unhandledRej = require('unhandled-rejection');np
+
+                if (err) {
+                    console.log('this error is: ' + err);
+                } 
+                if (movie) {
+                    // Then we print out the imdbRating
+                    // 	* This will output the following information to your terminal/bash window:
+                    var movieTitle = movie.title
+                    var movieRating = movie.rated
+                    var movieYear = movie._year_data
+                    var movieCountry = movie.country
+                    var moviePlot = movie.plot
+                    var movieActors = movie.actors
+                    var movieRTR = movie.rating
+                    var movieURL = movie.imdburl
+                    // * Title of the movie
+                    console.log('Movie: ' + movieTitle);
+                    // * Year the movie came out.
+                    console.log('Year: ' + movieYear);
+                    // * movie rating.
+                    console.log('Rating: ' + movieRating);
+                    // * Country where the movie was produced.
+                    console.log('Country: ' + movieCountry);
+                    // * Language of the movie.
+                    console.log('Language: ' + movieLanguage);
+                    // * Plot of the movie.
+                    console.log('Plot: ' + moviePlot);
+                    // * Actors in the movie.
+                    console.log('Actors: ' + movieActors);
+                    // * IMDB Rating.
+                    console.log('Rating: ' + movieRTR)
+                    // * IMDB URL.
+                    console.log('IMDB URL: ' + movieURL);
+                };
+            });
+        };
+        break;
     default: 
         console.log('default');
 } 
