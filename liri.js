@@ -88,9 +88,9 @@ switch (commandArg) {
                     if(err){
                         console.log(err);
                     };
-                    console.log('log.txt is appended');
                 }); 
-            } 
+            }
+            console.log('log.txt is appended'); 
         });
         break;       
     //3. `node liri.js movie-this '<movie name here>'`
